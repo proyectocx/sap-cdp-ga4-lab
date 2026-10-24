@@ -6,15 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demo Store | SAP CDP + GA4</title>
 
+  <!-- Google Analytics 4 -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N7HSTEZXH"></script>
 
   <script>
     window.dataLayer = window.dataLayer || [];
+
     function gtag() {
       dataLayer.push(arguments);
     }
 
     gtag('js', new Date());
+
     gtag('config', 'G-8N7HSTEZXH', {
       debug_mode: true
     });
@@ -60,6 +64,10 @@
       cursor: pointer;
     }
 
+    button:hover {
+      background: #0d4f83;
+    }
+
     #status {
       margin-top: 20px;
       color: #18794e;
@@ -71,15 +79,18 @@
 <body>
   <main>
     <div class="tag">LABORATORIO SAP CDP + GA4</div>
-    <h1>Demo Store</h1>
-    <h2>Auriculares inalámbricos</h2>
 
 ```
+<h1>Demo Store</h1>
+<h2>Auriculares inalámbricos</h2>
+
 <p>Producto de prueba para nuestro laboratorio de integración.</p>
 
 <div class="price">79,99 €</div>
 
-<button id="interestButton">Me interesa este producto</button>
+<button id="interestButton">
+  Me interesa este producto
+</button>
 
 <p id="status" aria-live="polite"></p>
 ```
@@ -87,16 +98,18 @@
   </main>
 
   <script>
-    document.getElementById('interestButton').addEventListener('click', function () {
-      gtag('event', 'lab_product_interest', {
-        product_id: 'HEADPHONES_001',
-        product_name: 'Auriculares inalámbricos',
-        event_source: 'demo_web'
-      });
+    document
+      .getElementById('interestButton')
+      .addEventListener('click', function () {
+        gtag('event', 'lab_product_interest', {
+          product_id: 'HEADPHONES_001',
+          product_name: 'Auriculares inalámbricos',
+          event_source: 'demo_web'
+        });
 
-      document.getElementById('status').textContent =
-        'Evento enviado. Vamos a comprobar su recepción en GA4.';
-    });
+        document.getElementById('status').textContent =
+          'Evento enviado. Vamos a comprobar su recepción en GA4.';
+      });
   </script>
 
 </body>
