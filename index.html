@@ -1,13 +1,13 @@
+```html
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Demo Store | SAP CDP + GA4</title>
 
   <!-- Google Analytics 4 -->
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N7HSTEZXH"></script>
 
   <script>
@@ -25,92 +25,343 @@
   </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #f3f5f7;
-      margin: 0;
-      padding: 40px 20px;
       color: #222;
+      margin: 0;
+      padding: 30px 16px;
     }
 
-    main {
-      max-width: 600px;
-      margin: 40px auto;
-      background: white;
-      padding: 35px;
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      margin-bottom: 8px;
+      color: #163a5f;
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
       border-radius: 12px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
     }
 
-    .tag {
-      color: #1769aa;
-      font-weight: bold;
-      font-size: 13px;
+    h2 {
+      margin-top: 0;
+      color: #163a5f;
     }
 
-    .price {
-      font-size: 28px;
+    label {
+      display: block;
+      margin: 16px 0 8px;
       font-weight: bold;
-      margin: 25px 0;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 16px;
     }
 
     button {
-      background: #1769aa;
-      color: white;
+      width: 100%;
+      padding: 13px;
+      margin-top: 16px;
       border: 0;
       border-radius: 6px;
-      padding: 14px 22px;
+      background: #1769aa;
+      color: #fff;
       font-size: 16px;
       cursor: pointer;
     }
 
     button:hover {
-      background: #0d4f83;
+      background: #105487;
     }
 
-    #status {
-      margin-top: 20px;
-      color: #18794e;
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+
+    .secondary {
+      background: #27834a;
+    }
+
+    .secondary:hover {
+      background: #1d6739;
+    }
+
+    .status {
+      display: none;
+      padding: 12px;
+      margin-top: 16px;
+      border-radius: 6px;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+    }
+
+    .success {
+      display: block;
+      background: #e8f5e9;
+      color: #205b2c;
+    }
+
+    .info {
+      display: block;
+      background: #e8f1fb;
+      color: #17456f;
+    }
+
+    .product {
+      border: 1px solid #e1e5e9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .product-icon {
+      font-size: 48px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 25px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 4px;
+      background: #e8f1fb;
+      color: #17456f;
+      font-size: 12px;
+      margin-bottom: 12px;
     }
   </style>
-
 </head>
 
 <body>
-  <main>
-    <div class="tag">LABORATORIO SAP CDP + GA4</div>
+  <main class="container">
 
-```
-<h1>Demo Store</h1>
-<h2>Auriculares inalámbricos</h2>
+    <header class="header">
+      <h1>Demo Store</h1>
+      <p>Laboratorio de SAP Customer Data Platform + GA4</p>
+    </header>
 
-<p>Producto de prueba para nuestro laboratorio de integración.</p>
+    <!-- PASO 1: IDENTIFICAR AL VISITANTE -->
+    <section class="card">
+      <span class="tag">Paso 1</span>
+      <h2>Identificación del cliente</h2>
 
-<div class="price">79,99 €</div>
+      <p>
+        Introduce un email de prueba para identificarte
+        en este laboratorio.
+      </p>
 
-<button id="interestButton">
-  Me interesa este producto
-</button>
+      <form id="identity-form">
+        <label for="customer-email">Email</label>
 
-<p id="status" aria-live="polite"></p>
-```
+        <input
+          type="email"
+          id="customer-email"
+          placeholder="cliente@example.com"
+          autocomplete="email"
+          required
+        >
+
+        <button type="submit" id="identify-button">
+          Identificarme
+        </button>
+      </form>
+
+      <div id="identity-status" class="status" aria-live="polite"></div>
+
+      <p class="muted">
+        Laboratorio: el email no se envía a Google Analytics
+        ni se transmite todavía a SAP CDP. No introduzcas datos
+        personales reales en esta demostración.
+      </p>
+    </section>
+
+    <!-- PASO 2: EVENTO DE COMPORTAMIENTO -->
+    <section class="card">
+      <span class="tag">Paso 2</span>
+      <h2>Producto destacado</h2>
+
+      <div class="product">
+        <div class="product-icon" aria-hidden="true">🎧</div>
+
+        <h3>Auriculares inalámbricos</h3>
+
+        <p>
+          Auriculares Bluetooth con cancelación de ruido.
+        </p>
+
+        <div class="price">79,99 €</div>
+
+        <button
+          type="button"
+          class="secondary"
+          id="interest-button"
+          disabled
+        >
+          Me interesa este producto
+        </button>
+
+        <div id="event-status" class="status" aria-live="polite"></div>
+      </div>
+    </section>
 
   </main>
 
   <script>
-    document
-      .getElementById('interestButton')
-      .addEventListener('click', function () {
-        gtag('event', 'lab_product_interest', {
-          product_id: 'HEADPHONES_001',
-          product_name: 'Auriculares inalámbricos',
-          event_source: 'demo_web'
+    const GA_MEASUREMENT_ID = 'G-8N7HSTEZXH';
+
+    const identityForm = document.getElementById('identity-form');
+    const emailInput = document.getElementById('customer-email');
+    const identifyButton = document.getElementById('identify-button');
+    const identityStatus = document.getElementById('identity-status');
+    const interestButton = document.getElementById('interest-button');
+    const eventStatus = document.getElementById('event-status');
+
+    let customerIdentified = false;
+    let gaClientId = null;
+
+    function showStatus(element, message, type) {
+      element.textContent = message;
+      element.className = 'status ' + type;
+    }
+
+    function getGaClientId() {
+      return new Promise((resolve, reject) => {
+        if (typeof window.gtag !== 'function') {
+          reject(new Error('Google Analytics todavía no está disponible.'));
+          return;
+        }
+
+        window.gtag('get', GA_MEASUREMENT_ID, 'client_id', (clientId) => {
+          if (clientId) {
+            resolve(clientId);
+          } else {
+            reject(new Error('No se ha podido obtener el client_id de GA4.'));
+          }
         });
-
-        document.getElementById('status').textContent =
-          'Evento enviado. Vamos a comprobar su recepción en GA4.';
       });
-  </script>
+    }
 
+    identityForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim().toLowerCase();
+
+      if (!emailInput.checkValidity() || !email) {
+        emailInput.reportValidity();
+        return;
+      }
+
+      identifyButton.disabled = true;
+
+      showStatus(
+        identityStatus,
+        'Obteniendo el identificador de GA4...',
+        'info'
+      );
+
+      try {
+        gaClientId = await getGaClientId();
+
+        customerIdentified = true;
+        interestButton.disabled = false;
+
+        showStatus(
+          identityStatus,
+          'Identificación de prueba completada. ' +
+          'Identificador GA4: ' + gaClientId +
+          '. El email permanece únicamente en esta página; ' +
+          'todavía no se ha enviado a SAP CDP.',
+          'success'
+        );
+
+        /*
+         * IMPORTANTE:
+         * No enviamos el email a GA4.
+         * Tampoco afirmamos que el visitante ya tenga un perfil en SAP CDP.
+         * La asociación email <-> client_id deberá enviarse posteriormente
+         * a un backend seguro para poder persistirla y resolver el perfil.
+         */
+      } catch (error) {
+        customerIdentified = false;
+        gaClientId = null;
+        interestButton.disabled = true;
+        identifyButton.disabled = false;
+
+        showStatus(
+          identityStatus,
+          error.message +
+          ' Comprueba que GA4 ha terminado de cargar y vuelve a intentarlo.',
+          'info'
+        );
+      }
+    });
+
+    interestButton.addEventListener('click', () => {
+      if (!customerIdentified || !gaClientId) {
+        showStatus(
+          eventStatus,
+          'Primero debes completar la identificación de prueba.',
+          'info'
+        );
+        return;
+      }
+
+      if (typeof window.gtag !== 'function') {
+        showStatus(
+          eventStatus,
+          'Google Analytics no está disponible. Recarga la página e inténtalo de nuevo.',
+          'info'
+        );
+        return;
+      }
+
+      window.gtag('event', 'lab_product_interest', {
+        product_id: 'HEADPHONES_001',
+        product_name: 'Auriculares inalámbricos',
+        event_source: 'demo_web',
+        debug_mode: true
+      });
+
+      showStatus(
+        eventStatus,
+        'Evento lab_product_interest enviado a GA4. ' +
+        'El identificador de GA4 asociado es ' + gaClientId + '.',
+        'success'
+      );
+    });
+  </script>
 </body>
 </html>
